@@ -1,6 +1,8 @@
 ﻿using SharpGL;
+using SharpGL.SceneGraph;
 using SharpGL.SceneGraph.Assets;
 using SharpGL.SceneGraph.Cameras;
+using SharpGL.SceneGraph.Lighting;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -55,6 +57,19 @@ namespace Planets_Lab_1
 
             MoonMaterial.Texture = MoonTexture;
             Moon.TextureCoords = true;
+
+            Light light = new Light()
+            {
+                On = true,
+                Position = new Vertex(0, 0, 0),
+                GLCode = OpenGL.GL_LIGHT1
+            };
+
+            
+
+            
+
+            sceneControl1.Scene.SceneContainer.AddChild(light);
 
 
             //SharpGL.OpenGL gl = this.sceneControl1.OpenGL;
@@ -115,19 +130,5 @@ namespace Planets_Lab_1
             rotate -= 0.05;
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                //  Destroy the existing texture.
-                texture.Destroy(sceneControl1.OpenGL);
-
-                //  Create a new texture.
-                texture.Create(sceneControl1.OpenGL, openFileDialog1.FileName);
-
-                //  Redraw.
-                sceneControl1.Invalidate();
-            }
-        }
     }
 }
