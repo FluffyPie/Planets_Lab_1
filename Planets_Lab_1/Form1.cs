@@ -30,19 +30,31 @@ namespace Planets_Lab_1
             SharpGL.SceneGraph.Assets.Material SunMaterial = new SharpGL.SceneGraph.Assets.Material();
             SharpGL.SceneGraph.Assets.Material EarthMaterial = new SharpGL.SceneGraph.Assets.Material();
             SharpGL.SceneGraph.Assets.Material MoonMaterial = new SharpGL.SceneGraph.Assets.Material();
-            //SharpGL.SceneGraph.Assets.Texture texture = new SharpGL.SceneGraph.Assets.Texture();
-            //SharpGL.SceneGraph.Assets.Texture texture1 = new SharpGL.SceneGraph.Assets.Texture();
+            
+            SharpGL.SceneGraph.Assets.Texture SunTexture = new SharpGL.SceneGraph.Assets.Texture();
+            SharpGL.SceneGraph.Assets.Texture EarthTexture = new SharpGL.SceneGraph.Assets.Texture();
+            SharpGL.SceneGraph.Assets.Texture MoonTexture = new SharpGL.SceneGraph.Assets.Texture();
 
-            // material1.Ambient = Color.FromArgb(100, Color.Red);
+            OpenGLControl openglCtr = new SharpGL.OpenGLControl();
+            SunTexture.Create(openglCtr.OpenGL, "Sun.bmp");
 
+            OpenGLControl openglCtr1 = new SharpGL.OpenGLControl();
+            MoonTexture.Create(openglCtr1.OpenGL, "Moon.jpg");
 
-            // OpenGLControl openglCtr = new SharpGL.OpenGLControl();
-            // texture.Create(openglCtr.OpenGL, "Sun.bmp");
+            OpenGLControl openglCtr2 = new SharpGL.OpenGLControl();
+            EarthTexture.Create(openglCtr2.OpenGL, "Earth.jpg");
 
             //// texture1.Create(openglCtr.OpenGL, "Crate.bmp");
 
             //// material.Texture = texture1;
-            // material1.Texture = texture;
+            SunMaterial.Texture = SunTexture;
+            Sun.TextureCoords = true;
+
+            EarthMaterial.Texture = EarthTexture;
+            Earth.TextureCoords = true;
+
+            MoonMaterial.Texture = MoonTexture;
+            Moon.TextureCoords = true;
 
 
             //SharpGL.OpenGL gl = this.sceneControl1.OpenGL;
@@ -54,14 +66,14 @@ namespace Planets_Lab_1
             //gl.BindTexture(OpenGL.GL_TEXTURE_2D, textureID[0]);
             //gl.TexImage2D(OpenGL.GL_TEXTURE_2D, 0, (int)OpenGL.GL_TEXTURE, 256, 256, 50, OpenGL.GL_TEXTURE, OpenGL.GL_BYTE, colors);
 
-            SunMaterial.Diffuse = Color.Orange;
-            EarthMaterial.Diffuse = Color.Cyan;
-            MoonMaterial.Diffuse = Color.Silver;
-            SunMaterial.Ambient = Color.FromArgb(0, Color.Orange);
-            EarthMaterial.Ambient = Color.FromArgb(255, Color.Blue);
-            MoonMaterial.Ambient = Color.FromArgb(255, Color.Silver);
+            //// SunMaterial.Diffuse = Color.Orange;
+            //EarthMaterial.Diffuse = Color.Cyan;
+            //MoonMaterial.Diffuse = Color.Silver;
+            ////SunMaterial.Ambient = Color.FromArgb(0, Color.Orange);
+            //EarthMaterial.Ambient = Color.FromArgb(255, Color.Blue);
+            //MoonMaterial.Ambient = Color.FromArgb(255, Color.Silver);
 
-            SunMaterial.Texture = texture;
+            SunMaterial.Texture = SunTexture;
 
             Sun.Material = SunMaterial;
             Moon.Material = MoonMaterial;
@@ -80,7 +92,7 @@ namespace Planets_Lab_1
 
 
  
-            //  Create the arcball camera.
+    
 
         }
         double rotate = 0;
@@ -88,15 +100,15 @@ namespace Planets_Lab_1
         double j = 0;
         private void Tick(object sender, EventArgs e)
         {
-            Earth.Transformation.RotateZ = (float)j;
-            Moon.Transformation.RotateZ = (float)rotate;
+            Earth.Transformation.RotateZ = (float)j*trackBar1.Value;
+            Moon.Transformation.RotateZ = (float)rotate*trackBar1.Value;
 
-            Earth.Transformation.TranslateX = (float)(10*Math.Cos(i));
-            Earth.Transformation.TranslateY = (float)(10*Math.Sin(i));
+            Earth.Transformation.TranslateX = (float)(10*Math.Cos(i * trackBar1.Value));
+            Earth.Transformation.TranslateY = (float)(10*Math.Sin(i * trackBar1.Value));
 
 
-            Moon.Transformation.TranslateX = (float)(10 * Math.Cos(i)) + (float)(3 * Math.Cos(j));
-            Moon.Transformation.TranslateY = (float)(10 * Math.Sin(i)) + (float)(3 * Math.Sin(j));
+            Moon.Transformation.TranslateX = (float)(10 * Math.Cos(i * trackBar1.Value)) + (float)(3 * Math.Cos(j * trackBar1.Value));
+            Moon.Transformation.TranslateY = (float)(10 * Math.Sin(i * trackBar1.Value)) + (float)(3 * Math.Sin(j * trackBar1.Value));
 
             j += 0.05;
             i+= 0.001;
